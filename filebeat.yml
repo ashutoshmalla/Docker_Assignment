@@ -1,0 +1,23 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/*.log
+  fields:
+    log_type: nginx
+  fields_under_root: true
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  username: "elastic"
+  password: "changeme%"
+  index: "filebeat-nginx-%{+yyyy.MM.dd}"
+
+setup.kibana:
+  host: "kibana:5601"
+  username: "elastic"
+  password: "changeme%"
+
+#setup.template.name: "my_custom_template"
+setup.template.name: "Default"
+setup.template.pattern: "nginx-2024.02.29"
